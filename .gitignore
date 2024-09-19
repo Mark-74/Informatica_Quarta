@@ -1,0 +1,7 @@
+# Ignore bin and obj folders in all subdirectories
+**/bin/
+**/obj/
+
+# Optionally, ignore Visual Studio temporary files and folders
+.vscode/
+.vs/
