@@ -18,17 +18,17 @@ namespace EsercizioAlunni
 
     class Istituto
     {
-        private static Dictionary<string, Classe> _classi = new Dictionary<string, Classe>();
+        private Dictionary<string, Classe> _classi = new Dictionary<string, Classe>();
 
         //metodi statici per ottenere le classi istanziate in precedenza
 
-        public static bool AlreadyInstantiated(string nomeClasse) => _classi.ContainsKey(nomeClasse.ToUpper());
+        public bool AlreadyInstantiated(string nomeClasse) => _classi.ContainsKey(nomeClasse.ToUpper());
 
-        public static Classe GetInstance(string nomeClasse) => _classi[nomeClasse.ToUpper()];
+        public Classe GetInstance(string nomeClasse) => _classi[nomeClasse.ToUpper()];
 
-        public static List<Classe> GetClassiIstanziate() => _classi.Values.ToList();
+        public List<Classe> GetClassiIstanziate() => _classi.Values.ToList();
 
-        public static void Add(Classe classe) => _classi.Add(classe.NomeClasse, classe);
+        public void Add(Classe classe) => _classi.Add(classe.NomeClasse, classe);
     }
 
     class Classe
@@ -43,7 +43,7 @@ namespace EsercizioAlunni
 
         //costruttore
 
-        public Classe(byte anno, char sezione, Indirizzo indirizzo)
+        public Classe(byte anno, char sezione, Indirizzo indirizzo, Istituto istitutoDiAppartenenza)
         {
             //controllo errori parametri
             if (anno < 1 || anno > 5) throw new Exception("Invalid Anno");
@@ -61,8 +61,8 @@ namespace EsercizioAlunni
             Indirizzo = indirizzo;
             _iscritti = new List<Alunno>();
 
-            if (!Istituto.AlreadyInstantiated(NomeClasse))
-                Istituto.Add(this);
+            if (!istitutoDiAppartenenza.AlreadyInstantiated(NomeClasse))
+                istitutoDiAppartenenza.Add(this);
             else 
                 throw new Exception("Classe already instantiated");
         }
@@ -137,6 +137,8 @@ namespace EsercizioAlunni
     {
         static void Main()
         {
+            Istituto Pascal = new Istituto();
+
             //Istanzio StreamReader per leggere da file
             using (StreamReader sr = new StreamReader(@"..\..\..\elenco-alunni-classi.txt"))
             {
@@ -151,7 +153,7 @@ namespace EsercizioAlunni
                         if (lineaLetta.Length != 6) throw new Exception();
 
                         //ottengo istanza della classe (quella già istanziata se esistente oppure una nuova)
-                        Classe classe = Istituto.AlreadyInstantiated($"{lineaLetta[4]}") ? Istituto.GetInstance($"{lineaLetta[4]}") : new Classe(byte.Parse($"{lineaLetta[4][0]}"), lineaLetta[4][1], Classe.ParseIndirizzo(lineaLetta[5]));
+                        Classe classe = Pascal.AlreadyInstantiated($"{lineaLetta[4]}") ? Pascal.GetInstance($"{lineaLetta[4]}") : new Classe(byte.Parse($"{lineaLetta[4][0]}"), lineaLetta[4][1], Classe.ParseIndirizzo(lineaLetta[5]), Pascal);
                         classe.AddAlunno(new Alunno(lineaLetta[0], lineaLetta[1], lineaLetta[2][0], DateOnly.Parse(lineaLetta[3])));
                     }
                     catch(Exception e) //Aggiungo Alunno alla classe, se viene tirato un errore il catch termina la lettura
@@ -164,13 +166,12 @@ namespace EsercizioAlunni
                 }
             }
 
-            foreach (Classe classe in Istituto.GetClassiIstanziate())
+            //Stampa a video dei dati letti
+            foreach (Classe classe in Pascal.GetClassiIstanziate())
             {
                 Console.WriteLine($"\nClasse {classe}\n");
                 foreach (Alunno alunno in classe.GetAlunni())
-                {
-                    Console.WriteLine(alunno.ToString());
-                }
+                    Console.WriteLine(alunno);
             }
 
         }
