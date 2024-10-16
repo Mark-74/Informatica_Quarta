@@ -1,4 +1,10 @@
-﻿using System.Diagnostics.Metrics;
+﻿/*
+ * Marco balducci 4H 15/10/2024
+ * implementazione di Linked List
+*/
+
+
+using System.Diagnostics.Metrics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -11,10 +17,10 @@ namespace LinkedList
         {
             // Essendo "private" l'intera class, posso usare "public" per i campi
             public int value;
-            public Node next;
+            public Node? next;
         }
 
-        private Node head;
+        private Node? head;
         public LinkedList()
         {
             Count = 0;
@@ -26,6 +32,8 @@ namespace LinkedList
 
         public int getValueAt(int idx)
         {
+            if (head == null) throw new IndexOutOfRangeException();
+
             Node n = getNodeAt(idx);
             return n.value;
         }
@@ -55,21 +63,81 @@ namespace LinkedList
         }
         public void RemoveAt(int idx)
         {
-            Node n = getNodeAt(idx);
-            
-            n.next = idx < Count - 1 ? n.next.next : null;
+            if (head == null) return;
+
+            if (idx != 0)    //Caso 1: non devo rimuovere il primo nodo (head)
+            {
+                Node n = getNodeAt(idx - 1);
+                n.next = idx < Count - 1 ? n.next.next : null;
+            } 
+            else            //caso 2: devo rimuovere la head
+            {
+                head = head!.next;
+            }
+
             Count--;
         }
         public void RemoveValue(int value)
         {
+            if (head == null) return;
+
             int index = Search(value);
             if (index != -1) 
                 RemoveAt(index);
         }
+
+        public void RemoveAllValue(int value)
+        {
+            if(head ==  null) return;
+
+            bool end = false;
+            // O(n)
+            for(Node n = head!; !end && n.next != null; n = n.next)
+            {
+                while(n.next!.value == value)
+                {
+                    Count--;
+                    if (n.next.next != null)
+                        n.next = n.next.next;
+                    else //fine LinkedList
+                    {
+                        n.next = null;
+                        end = true; 
+                        break;
+                    }
+                }
+            }
+
+            if (head!.value == value)
+            {
+                head = head.next;
+                Count--;
+            }
+
+            /* // O(n^2)
+            for (int i = Search(value); i != -1; i = Search(value))
+                RemoveAt(i);
+            */
+        }
+
+        public void RemoveAfter(int idx)
+        {
+            getNodeAt(idx).next = null;
+            Count = idx + 1;
+        }
+
+        public void Reset()
+        {
+            Count = 0;
+            head = null; 
+        }
+
         public int Search(int value)
         {
+            if (head == null) throw new IndexOutOfRangeException();
+
             int i = 0;
-            for (Node curr = head; curr != null; curr = curr.next, ++i)
+            for (Node curr = head!; curr != null; curr = curr.next!, ++i)
             {
                 if (curr.value == value)
                     return i;
@@ -79,100 +147,16 @@ namespace LinkedList
         }
         private Node getNodeAt(int idx)
         {
+            if (head == null) throw new IndexOutOfRangeException();
+
             if (idx < 0 || idx >= Count)
                 throw new IndexOutOfRangeException();
 
-            Node n = head;
+            Node n = head!;
             for (int i = 0; i < idx; i++)
-                n = n.next;
+                n = n.next!;
 
             return n;
-        }
-    }
-    class ArrayList
-    {
-        private int[] data;
-        private int count;
-        public ArrayList(int capacity)
-        {
-            data = new int[capacity];
-            count = 0;
-        }
-
-        public int Count { get { return count; } }
-        public int this[int idx]
-        {
-            get
-            {
-                if (idx < 0 || count < idx)
-                    throw new IndexOutOfRangeException();
-                return data[idx];
-            }
-            set
-            {
-                if (idx < 0 || count < idx)
-                    throw new IndexOutOfRangeException();
-                data[idx] = value;
-            }
-        }
-        public void Add(int value)
-        {
-            if (count == data.Length)
-                Realloc(2 * data.Length);
-
-            data[count++] = value;
-        }
-        public void RemoveAt(int idx)
-        {
-            if (idx < 0 || count < idx)
-                throw new IndexOutOfRangeException();
-            ShiftLeft(idx);
-        }
-        public void RemoveValue(int value)
-        {
-            int idx = Search(value);
-            if (idx >= 0)
-                RemoveAt(idx);
-        }
-        public int Search(int value)
-        {
-            for (int i = 0; i < count; ++i)
-            {
-                if (data[i] == value)
-                    return i;
-            }
-
-            return -1;
-        }
-
-        // i metodi che seguono sono stati presi da https://classroom.google.com/c/NjI0MDAwODEyNDMx/m/NjcyOTQ3NjgwMjM5/details
-        private void Realloc(int new_capacity)
-        {
-            int[] new_data = new int[new_capacity];
-            int idx_max = Math.Min(data.Length, new_data.Length);
-            for (int i = 0; i < idx_max; ++i)
-                new_data[i] = data[i];
-            data = new_data;
-        }
-        private void ShiftRight(int idx)
-        {
-            if (idx < 0 || count < idx)
-                throw new IndexOutOfRangeException();
-            if (count == data.Length)
-                Realloc(2 * data.Length);
-            int move_count = count - idx; // numero di elementi da spostare
-            for (int k = move_count; k > 0; --k)
-                data[idx + k] = data[idx + k - 1];
-            ++count;
-        }
-        private void ShiftLeft(int idx)
-        {
-            if (idx < 0 || count <= idx)
-                throw new IndexOutOfRangeException();
-            int move_count = count - idx - 1; // numero di elementi da spostare
-            for (int k = 0; k < move_count; ++k)
-                data[idx + k] = data[idx + k + 1];
-            --count;
         }
     }
 
@@ -181,10 +165,21 @@ namespace LinkedList
         static void Main(string[] args)
         {
             LinkedList list = new LinkedList();
+
+            list.Add(4);
             list.Add(0);
             list.Add(1);
             list.Add(2);
             list.Add(3);
+            list.Add(4);
+            list.Add(4);
+            list.Add(4);
+            list.Add(4);
+            list.Add(4);
+            list.Add(4);
+            list.Add(4);
+            list.Add(4);
+            list.Add(4);
 
             Console.WriteLine(list.Count);
             Console.WriteLine();
@@ -200,9 +195,33 @@ namespace LinkedList
                 Console.WriteLine($"{list[i]} - {i}");
             Console.WriteLine() ;
 
+            list.RemoveAt(1);
+            list.RemoveValue(0);
             Console.WriteLine(list.Count);
             Console.WriteLine();
-            list.RemoveAt(1);
+            for (int i = 0; i < list.Count; ++i)
+                Console.WriteLine($"{list[i]} - {i}");
+            Console.WriteLine();
+
+            list.RemoveAllValue(4);
+
+            Console.WriteLine(list.Count);
+            Console.WriteLine();
+            for (int i = 0; i < list.Count; ++i)
+                Console.WriteLine($"{list[i]} - {i}");
+            Console.WriteLine();
+
+            list.RemoveAfter(1);
+
+            Console.WriteLine(list.Count);
+            Console.WriteLine();
+            for (int i = 0; i < list.Count; ++i)
+                Console.WriteLine($"{list[i]} - {i}");
+            Console.WriteLine();
+
+            list.Reset();
+            Console.WriteLine(list.Count);
+            Console.WriteLine();
             for (int i = 0; i < list.Count; ++i)
                 Console.WriteLine($"{list[i]} - {i}");
         }
