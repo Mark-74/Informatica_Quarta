@@ -45,6 +45,9 @@
             den /= MCD;
         }
 
+        //si possono anche definire operatori di conversione
+        public static explicit operator RationalNumber(int a) => new RationalNumber(a);
+
         //Override operatori: Questi operatori vengono chiamati quando si usa un operatore su un oggetto di questa classe
         public static RationalNumber operator +(RationalNumber a, RationalNumber b) => new RationalNumber(a.num * b.den + b.num * a.den, a.den * b.den);
         public static RationalNumber operator -(RationalNumber a, RationalNumber b) => new RationalNumber(a.num * b.den - b.num * a.den, a.den * b.den);
