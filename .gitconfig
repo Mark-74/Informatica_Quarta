@@ -6,3 +6,5 @@
 	email = balduccimarco2007@gmail.com
 [core]
 	editor = \"C:/Program Files (x86)/GitExtensions/GitExtensions.exe\" fileeditor
+[credential "http://biagio"]
+	provider = generic
