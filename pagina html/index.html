@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <!-- Qui sono presenti informazioni che l'utente solitamente non vede -->
+        <!-- Posso inserire metainformazioni interpretabili dal browser -->
+        <!-- Le chiavi di meta sono codificate, quindi vanno conosciute --> 
+        <meta charset="UTF-8">
+        <!-- le metainformazioni sono usate dai motori di ricerca -->
+         <meta name="description" content="HTML page">
+         <meta name="author" content="Molly">
+         <meta http-equiv="refresh" content="10">
+         <meta name="viewport" content="width-device-width">
+        <!-- L'unica parte che viene mostrata è il title, è mostrata nella tab del browser -->
+        <title>
+            Home
+        </title>
+
+        <!-- Si può inserire la tag style per utilizzare il css -->
+        <style>
+
+        </style>
+
+        <!-- Posso importare qualcosa da un link -->
+        <link>
+    </head>
+    <body>
+        <h1>Titolo della pagina HTML</h1>
+
+
+
+        <ul>
+            <li>
+                Primo elemento lista non ordinata
+                <ol>
+                    <li> Primo </li>
+                    <li> Secondo </li>
+                    <li> Terzo </li>
+                </ol>
+            </li>
+            <li> Secondo elemento lista non ordinata </li>
+        </ul>
+
+        <!-- Inserisco caratteri speciali nel modo corretto -->
+
+        <p> Caratteri &lt; </p>
+        <p> Carattere &gt; </p>
+        <p> Carattere &amp; </p>
+        <p> Carattere &COPY; </p>
+        <p> Carattere &#126; scritto come codice unicode </p>
+
+
+        <p> Per inserire un link si usa il tag ancor <a href="https://amazon.com"> link </a></p>
+        <!-- href="file.html" Stesso server, stessa directory -->
+        <!-- href="/file.html" Stesso server, ma dalla root -->
+        <!-- href="sito.it/file" Cambio server (stesso protocollo usato per la pagina corrente) -->
+        <!-- href="https://... Specifico il protocollo" -->
+        <!-- href="..." target="_blank" Apre in una nuova scheda il link, altrimenti la scheda corrente viene aggiornata -->
+    
+        <!-- Inserire immagini -->
+        <img src="Venere.jpg" alt="Se stai vedendo questo testo allora l'immagine non è stata caricata" width="50%" height="50%">
+    
+    </body>
+</html>
