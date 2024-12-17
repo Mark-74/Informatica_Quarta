@@ -16,16 +16,17 @@ namespace AcquarioLib
     public class AnimatoPilotato : AnimatoInAcqua
     {
         protected Window MainWindow { get; }
+        protected bool FacingRight { get; set; } = true;
         public AnimatoPilotato(Canvas canvas, Image image, DispatcherTimer dispatcher, Window mainWindow, int movementX = 5, int movementY = 5)
             : base(canvas, image, dispatcher, movementX, movementY)
         {
             MainWindow = mainWindow;
         }
 
-        private bool CanIGoUpWards() => positionY - movementAmountY > 0;
-        private bool CanIGoDownWards() => Canvas.ActualHeight > positionY + Image.ActualHeight;
-        private bool CanIGoLeft() => positionX - movementAmountX > 0;
-        private bool CanIGoRight() => Canvas.RenderSize.Width > positionX + Image.ActualWidth;
+        protected bool CanIGoUpWards() => positionY - movementAmountY > 0;
+        protected bool CanIGoDownWards() => Canvas.ActualHeight > positionY + Image.ActualHeight;
+        protected bool CanIGoLeft() => positionX - movementAmountX > 0;
+        protected bool CanIGoRight() => Canvas.RenderSize.Width > positionX + Image.ActualWidth;
 
         protected virtual void GestoreComandi(Object sender, KeyEventArgs e)
         {
@@ -38,10 +39,14 @@ namespace AcquarioLib
                     if(CanIGoDownWards()) Canvas.SetTop(Image, positionY += movementAmountY);
                     break;
                 case Key.Left:
-                    if(CanIGoLeft()) Canvas.SetLeft(Image, positionX -= movementAmountX);
+                    if (FacingRight) flip();
+                    FacingRight = false;
+                    if (CanIGoLeft()) Canvas.SetLeft(Image, positionX -= movementAmountX);
                     break;
                 case Key.Right:
-                    if(CanIGoRight()) Canvas.SetLeft(Image, positionX += movementAmountX);
+                    if (!FacingRight) flip();
+                    FacingRight = true;
+                    if (CanIGoRight()) Canvas.SetLeft(Image, positionX += movementAmountX);
                     break;
             }
         }

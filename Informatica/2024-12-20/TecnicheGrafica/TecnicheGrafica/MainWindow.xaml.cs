@@ -74,7 +74,11 @@ namespace TecnicheGrafica
             tmp = new BitmapImage(new Uri("immagini/submariner.png", UriKind.RelativeOrAbsolute));
             submarine.Source = new TransformedBitmap(tmp, new ScaleTransform(170 / tmp.Width, 140 / tmp.Height));
             submarine.Margin = new Thickness(10, 10, 0, 0);
-            AnimatoPilotato sub = new AnimatoPilotato(canvasAcquario, submarine, FishDispatcher, this);
+            Image bullet = new Image();
+            tmp = new BitmapImage(new Uri("immagini/siluro.png", UriKind.RelativeOrAbsolute));
+            bullet.Source = new TransformedBitmap(tmp, new ScaleTransform(170 / tmp.Width, 140 / tmp.Height));
+            bullet.Margin = new Thickness(10, 10, 0, 0);
+            AnimatoPilotatoSilurante sub = new AnimatoPilotatoSilurante(canvasAcquario, submarine, FishDispatcher, this, bullet);
             sub.AddToScreen();
 
             sub.start();
