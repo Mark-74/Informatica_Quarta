@@ -52,7 +52,7 @@ namespace AcquarioLib
         }
 
 
-        public override void start()
+        public override void Start()
         {
             //set new origin to flip correctly
             Image.RenderTransformOrigin = new Point(0.5, 0.5);

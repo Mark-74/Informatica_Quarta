@@ -27,12 +27,6 @@ namespace TecnicheGrafica
         //Global variables
         DispatcherTimer FishDispatcher, PropsDispatcher;
 
-        AnimatoSulFondo anim;
-
-        double scaleX = 1.0;
-        double scaleY = 1.0;
-        double degrees = 0.0;
-
         /// <summary>
         /// Setup of the dispatcher Timer, it is called only once when the application starts
         /// </summary>
@@ -46,44 +40,29 @@ namespace TecnicheGrafica
             PropsDispatcher.Start();
 
         }
-        int i = 0;
         Random random = new Random();
 
         private void AggiungiOggetti()
         {
-            Image immagine = new Image();
-            Uri source = new Uri("immagini/foto_pesce_palla.png", UriKind.RelativeOrAbsolute);
-            immagine = new Image();
-            BitmapImage tmp = new BitmapImage(source);
-            immagine.Source = new TransformedBitmap(tmp, new ScaleTransform(170 / tmp.Width, 140 / tmp.Height));
-            immagine.Margin = new Thickness(10, 10, 0, 0);
-            
-            anim = new AnimatoInAcqua(canvasAcquario, immagine, FishDispatcher);
-            anim.ChangeCenterOfRotation(100, 100);
-            anim.AddToScreen();
+            AnimatoInAcqua animato = new AnimatoInAcqua(canvasAcquario, Inanimato.ImageFromName("foto_pesce_palla.png"), FishDispatcher);
+            animato.ChangeCenterOfRotation(100, 100);
 
-            Image frame1 = new Image();
-            tmp = new BitmapImage(new Uri("immagini/alga1.png", UriKind.RelativeOrAbsolute));
-            frame1.Source = new TransformedBitmap(tmp, new ScaleTransform(170 / tmp.Width, 140 / tmp.Height));
-            frame1.Margin = new Thickness(10, 10, 0, 0);
-            AnimatoSulPosto alga = new AnimatoSulPosto(canvasAcquario, frame1, PropsDispatcher);
+            AnimatoSulPosto alga = new AnimatoSulPosto(canvasAcquario, Inanimato.ImageFromName("alga1.png"), PropsDispatcher);
 
-            alga.AddToScreen(); 
+            AnimatoPilotatoSilurante sub = new AnimatoPilotatoSilurante(canvasAcquario, Inanimato.ImageFromName("submarine.png"), FishDispatcher, this, Inanimato.ImageFromName("siluro.png"));
 
-            Image submarine = new Image();
-            tmp = new BitmapImage(new Uri("immagini/submariner.png", UriKind.RelativeOrAbsolute));
-            submarine.Source = new TransformedBitmap(tmp, new ScaleTransform(170 / tmp.Width, 140 / tmp.Height));
-            submarine.Margin = new Thickness(10, 10, 0, 0);
-            Image bullet = new Image();
-            tmp = new BitmapImage(new Uri("immagini/siluro.png", UriKind.RelativeOrAbsolute));
-            bullet.Source = new TransformedBitmap(tmp, new ScaleTransform(170 / tmp.Width, 140 / tmp.Height));
-            bullet.Margin = new Thickness(10, 10, 0, 0);
-            AnimatoPilotatoSilurante sub = new AnimatoPilotatoSilurante(canvasAcquario, submarine, FishDispatcher, this, bullet);
-            sub.AddToScreen();
+            AnimatoSulFondo granchio = new AnimatoSulFondo(canvasAcquario, Inanimato.ImageFromName("crab.png"), FishDispatcher);
 
-            sub.start();
-            anim.start();
+            AnimatoInAcqua carpa = new AnimatoInAcqua(canvasAcquario, Inanimato.ImageFromName("carp.png"), FishDispatcher, 20);
+
+            AnimatoSulPosto alga2 = new AnimatoSulPosto(canvasAcquario, Inanimato.ImageFromName("alga2.png", 700), PropsDispatcher);
+
+            sub.Start();
+            animato.Start();
             alga.Start();
+            granchio.Start();
+            carpa.Start();
+            alga2.Start();
         }
 
         public MainWindow()

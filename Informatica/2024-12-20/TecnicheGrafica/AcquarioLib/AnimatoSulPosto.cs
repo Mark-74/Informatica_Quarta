@@ -21,7 +21,9 @@ namespace AcquarioLib
 
         public void MoveToBottom()
         {
-            Image.Margin = new Thickness(Image.Margin.Left, Canvas.Height - Image.RenderSize.Height, Image.Margin.Right, 0);
+            //Image.Margin = new Thickness(Image.Margin.Left, Canvas.Height - Image.RenderSize.Height, Image.Margin.Right, 0);
+            Canvas.SetTop(Image, Canvas.ActualHeight - Image.ActualHeight - 10);
+            positionY = Canvas.ActualHeight - Image.ActualHeight;
         }
 
         public void flip()
@@ -37,7 +39,7 @@ namespace AcquarioLib
             flip();
         }
 
-        public void Start()
+        public virtual void Start()
         {
             //set new origin to flip correctly
             Image.RenderTransformOrigin = new Point(0.5, 0.5);

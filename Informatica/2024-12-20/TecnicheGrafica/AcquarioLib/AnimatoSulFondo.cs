@@ -13,7 +13,6 @@ namespace AcquarioLib
 {
     public class AnimatoSulFondo : AnimatoSulPosto
     {
-        protected double positionX = 0;
         protected bool right;
         protected int movementAmountX;
 
@@ -33,7 +32,7 @@ namespace AcquarioLib
         {
             if (right)
             {
-                if (Canvas.RenderSize.Width < positionX + Image.ActualWidth) flip();
+                if (Canvas.RenderSize.Width <= positionX + Image.ActualWidth) flip();
                 return Canvas.RenderSize.Width > positionX + Image.ActualWidth;
             }
             else
@@ -45,16 +44,16 @@ namespace AcquarioLib
 
         public virtual void Move(object sender, EventArgs a)
         {
+            //position image to the bottom
+            MoveToBottom();
+
             right = CheckWidthBounds();
             positionX += right ? movementAmountX : -movementAmountX;
             Canvas.SetLeft(Image, positionX);
         }
 
-        public virtual void start()
+        public virtual void Start()
         {
-            //position image to the bottom
-            MoveToBottom();
-
             //set new origin to flip correctly
             Image.RenderTransformOrigin = new Point(0.5, 0.5);
 

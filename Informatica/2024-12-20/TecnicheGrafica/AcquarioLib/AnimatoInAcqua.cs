@@ -12,15 +12,12 @@ namespace AcquarioLib
 {
     public class AnimatoInAcqua : AnimatoSulFondo
     {
-        protected double positionY = 0;
         protected bool up;
         protected int movementAmountY;
 
         public AnimatoInAcqua(Canvas canvas, Image image, DispatcherTimer dispatcher, int movementX = 5, int movementY = 5)
             : base(canvas, image, dispatcher, movementX)
         {
-            positionX = Image.Margin.Left;
-            positionY = Image.Margin.Top;
             movementAmountY = movementY;
         }
 
@@ -42,7 +39,7 @@ namespace AcquarioLib
             Canvas.SetBottom(Image, positionY);
         }
 
-        public override void start()
+        public override void Start()
         {
 
             //set new origin to flip correctly
