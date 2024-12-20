@@ -1,4 +1,9 @@
-﻿//Marco Balducci 4H 2024-11-22
+﻿/*
+ * 
+ * Marco Balducci 4H 2024-11-22
+ * Wpf App that resembles an acquarium with a controllable player and moving objects
+ * 
+*/
 
 using System;
 using System.Text;
@@ -40,16 +45,16 @@ namespace TecnicheGrafica
             PropsDispatcher.Start();
 
         }
-        Random random = new Random();
 
         private void AggiungiOggetti()
         {
+            //add some objects
             AnimatoInAcqua animato = new AnimatoInAcqua(canvasAcquario, Inanimato.ImageFromName("foto_pesce_palla.png"), FishDispatcher);
             animato.ChangeCenterOfRotation(100, 100);
 
-            AnimatoSulPosto alga = new AnimatoSulPosto(canvasAcquario, Inanimato.ImageFromName("alga1.png"), PropsDispatcher);
+            AnimatoSulPosto alga1 = new AnimatoSulPosto(canvasAcquario, Inanimato.ImageFromName("alga1.png"), PropsDispatcher);
 
-            AnimatoPilotatoSilurante sub = new AnimatoPilotatoSilurante(canvasAcquario, Inanimato.ImageFromName("submarine.png"), FishDispatcher, this, Inanimato.ImageFromName("siluro.png"));
+            AnimatoPilotatoSilurante sub = new AnimatoPilotatoSilurante(canvasAcquario, Inanimato.ImageFromName("submarine.png"), FishDispatcher, this, Inanimato.ImageFromName("siluro.png"), bulletSpeed: 20);
 
             AnimatoSulFondo granchio = new AnimatoSulFondo(canvasAcquario, Inanimato.ImageFromName("crab.png"), FishDispatcher);
 
@@ -57,12 +62,16 @@ namespace TecnicheGrafica
 
             AnimatoSulPosto alga2 = new AnimatoSulPosto(canvasAcquario, Inanimato.ImageFromName("alga2.png", 1125), PropsDispatcher);
 
+            AnimatoInAcqua siluro = new AnimatoInAcqua(canvasAcquario, Inanimato.ImageFromName("pesceSiluro.png", left: 50, top: 100), FishDispatcher, 20, 0);
+
+            //start each object's animation
             sub.Start();
             animato.Start();
-            alga.Start();
+            alga1.Start();
             granchio.Start();
             carpa.Start();
             alga2.Start();
+            siluro.Start();
         }
 
         public MainWindow()

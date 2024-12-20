@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * 
+ * Marco Balducci 4H 2024-11-22
+ * Class for the wpf app
+ * 
+*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

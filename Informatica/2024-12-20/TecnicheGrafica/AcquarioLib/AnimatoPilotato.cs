@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * 
+ * Marco Balducci 4H 2024-11-22
+ * Class for the wpf app
+ * 
+*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,20 +21,43 @@ namespace AcquarioLib
 {
     public class AnimatoPilotato : AnimatoInAcqua
     {
+        /// <summary>
+        /// Window where the program is being run
+        /// </summary>
         protected Window MainWindow { get; }
+
+        /// <summary>
+        /// Represents the current direction
+        /// </summary>
         protected bool FacingRight { get; set; } = true;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="canvas">The Main Canvas</param>
+        /// <param name="image">The image to be shown</param>
+        /// <param name="dispatcher">The dispatcher that manages the movements of the object</param>
+        /// <param name="mainWindow">The window where the program in being run</param>
+        /// <param name="movementX">defines the movement to be made along the X axis for each tick</param>
+        /// <param name="movementY">defines the movement to be made along the Y axis for each tick</param>
         public AnimatoPilotato(Canvas canvas, Image image, DispatcherTimer dispatcher, Window mainWindow, int movementX = 5, int movementY = 5)
             : base(canvas, image, dispatcher, movementX, movementY)
         {
             MainWindow = mainWindow;
         }
 
+        //functions used to check the movements
         protected bool CanIGoUpWards() => positionY - movementAmountY > 0;
         protected bool CanIGoDownWards() => Canvas.ActualHeight > positionY + Image.ActualHeight;
         protected bool CanIGoLeft() => positionX - movementAmountX > 0;
         protected bool CanIGoRight() => Canvas.RenderSize.Width > positionX + Image.ActualWidth;
 
-        protected virtual void GestoreComandi(Object sender, KeyEventArgs e)
+        /// <summary>
+        /// Manages the user input
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected virtual void InputManager(Object sender, KeyEventArgs e)
         {
             switch (e.Key)
             {
@@ -39,25 +68,27 @@ namespace AcquarioLib
                     if(CanIGoDownWards()) Canvas.SetTop(Image, positionY += movementAmountY);
                     break;
                 case Key.Left:
-                    if (FacingRight) Flip();
+                    if (FacingRight) Flip();  //if direction changes, flip
                     FacingRight = false;
                     if (CanIGoLeft()) Canvas.SetLeft(Image, positionX -= movementAmountX);
                     break;
                 case Key.Right:
-                    if (!FacingRight) Flip();
+                    if (!FacingRight) Flip(); //if direction changes, flip
                     FacingRight = true;
                     if (CanIGoRight()) Canvas.SetLeft(Image, positionX += movementAmountX);
                     break;
             }
         }
 
-
+        /// <summary>
+        /// Function to be called after creating the object, links the input manager to the window
+        /// </summary>
         public override void Start()
         {
             //set new origin to flip correctly
             Image.RenderTransformOrigin = new Point(0.5, 0.5);
 
-            MainWindow.KeyDown += GestoreComandi;
+            MainWindow.KeyDown += InputManager;
         }
     }
 }

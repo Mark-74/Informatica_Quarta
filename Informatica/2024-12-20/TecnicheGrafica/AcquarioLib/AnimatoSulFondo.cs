@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * 
+ * Marco Balducci 4H 2024-11-22
+ * Class for the wpf app
+ * 
+*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +26,9 @@ namespace AcquarioLib
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="canvas"></param>
-        /// <param name="image"></param>
-        /// <param name="dispatcher"></param>
+        /// <param name="canvas">The Main Canvas</param>
+        /// <param name="image">The image to be shown</param>
+        /// <param name="dispatcher">The dispatcher that manages the movements of the object</param>
         /// <param name="movementX">optional parameter that defines the movement to be made for each tick</param>
         public AnimatoSulFondo(Canvas canvas, Image image, DispatcherTimer dispatcher, int movementX = 10)
             : base(canvas, image, dispatcher) 
@@ -33,6 +39,12 @@ namespace AcquarioLib
 
         //the center of rotation
         protected (int X, int Y) CenterOfRotation { get; set; }
+
+        /// <summary>
+        /// Changes the center of rotation, it is reccomended to call at least once before rotating the image
+        /// </summary>
+        /// <param name="X"></param>
+        /// <param name="Y"></param>
         public void ChangeCenterOfRotation(int X, int Y) => CenterOfRotation = (X, Y);
 
         /// <summary>

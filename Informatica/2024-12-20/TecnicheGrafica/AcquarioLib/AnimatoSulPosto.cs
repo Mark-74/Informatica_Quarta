@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * 
+ * Marco Balducci 4H 2024-11-22
+ * Class for the wpf app
+ * 
+*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,9 +22,9 @@ namespace AcquarioLib
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="canvas"></param>
-        /// <param name="image"></param>
-        /// <param name="dispatcher"></param>
+        /// <param name="canvas">The Main Canvas</param>
+        /// <param name="image">The image to be shown</param>
+        /// <param name="dispatcher">The dispatcher that manages the movements of the object</param>
         public AnimatoSulPosto(Canvas canvas, Image image, DispatcherTimer dispatcher) 
             : base(canvas, image, dispatcher) { }
 
@@ -56,7 +62,7 @@ namespace AcquarioLib
         /// <summary>
         /// Function to be called after creating the object, starts the animation
         /// </summary>
-        public virtual void Start()
+        public override void Start()
         {
             //set new origin to flip correctly
             Image.RenderTransformOrigin = new Point(0.5, 0.5);

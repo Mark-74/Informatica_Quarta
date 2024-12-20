@@ -1,4 +1,9 @@
-
+/*
+ * 
+ * Marco Balducci 4H 2024-11-22
+ * Class for the wpf app
+ * 
+*/
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -75,6 +80,11 @@ namespace AcquarioLib
             AddToScreen();
             instances.Add(this);
         }
+
+        /// <summary>
+        /// This function only makes sense for the next classes
+        /// </summary>
+        public virtual void Start() {}
     }
 
 }
