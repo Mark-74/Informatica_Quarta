@@ -100,8 +100,10 @@ td {
 
 img.school-image {
     width: 40%;
-    padding-right: 5%;
+    margin-right: 5%;
+    border-radius: 15px;
 }
+
 
 img.interest-img {
     background-color: #00000020;
