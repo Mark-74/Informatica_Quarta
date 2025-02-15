@@ -1,8 +1,28 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+footer {
+    flex-shrink: 0;
+    width: 100%;
+    padding: 10px 0;
+    margin: 0;
+    text-align: center;
+    background-color: #141414;
+    color: whitesmoke;
+    font-size: 14px;
+}
+
 body {
     background-color: #363636;
 }
 
 nav {
+    flex-shrink: 0;
     display: flex;
     height: 50px;
     width: 100%;
@@ -61,17 +81,6 @@ span.title {
     font-family: "Times New Roman";
 }
 
-footer{
-    position: absolute;
-    padding-bottom: 3%;
-    padding-top: 1%;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    background-color: #141414;
-    color: whitesmoke;
-}
-
 table {
     border: 1px solid black;
     border-collapse: collapse;
@@ -99,11 +108,11 @@ td {
 }
 
 img.school-image {
+    height: 40%;
     width: 40%;
     margin-right: 5%;
     border-radius: 15px;
 }
-
 
 img.interest-img {
     background-color: #00000020;
@@ -127,6 +136,25 @@ img.interest-img {
     width: 100%;
     height: inherit;
     justify-content: space-evenly;
+}
+
+.job-row {
+    display: flex;
+    padding: 10px;
+    width: 95%;
+    padding-right: 4%;
+    height: inherit;
+    justify-content: space-evenly;
+    background-color: #00000020;
+    border-radius: 2%;
+}
+
+.job-img {
+    border-radius: 5px;
+    height: auto;
+    max-height: inherit;
+    width: 30%;
+    padding: 5px;
 }
 
 div.interest-title{
