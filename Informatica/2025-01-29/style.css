@@ -1,3 +1,4 @@
+/* Main style */
 html, body {
     height: 100%;
     margin: 0;
@@ -20,7 +21,9 @@ footer {
 body {
     background-color: #363636;
 }
+/* Main style end */
 
+/* Navbar style */
 nav {
     flex-shrink: 0;
     display: flex;
@@ -46,7 +49,9 @@ nav {
 .nav-element:hover {
     color:blueviolet;
 }
+/* Navbar style end */
 
+/* Row style */
 .row {
     display: flex;
     padding: 10px;
@@ -55,6 +60,27 @@ nav {
     justify-content: center;
 }
 
+.interest-row {
+    display: flex;
+    padding: 10px;
+    width: 100%;
+    height: inherit;
+    justify-content: space-evenly;
+}
+
+.job-row {
+    display: flex;
+    padding: 10px;
+    width: 95%;
+    padding-right: 4%;
+    height: inherit;
+    justify-content: space-evenly;
+    background-color: #00000020;
+    border-radius: 2%;
+}
+/* Row style end */
+
+/* Containers style */
 .container {
     display: flex;
     width: 100%;
@@ -70,7 +96,9 @@ nav {
     background-color: antiquewhite;
     box-shadow: 5px 5px 8px black;
 }
+/* Containers style end */
 
+/* Text style */
 span.title {
     display: block;
     width: 100%;
@@ -81,6 +109,19 @@ span.title {
     font-family: "Times New Roman";
 }
 
+div.interest-title{
+    font-weight: bold;
+}
+
+.description {
+    background-color: #00000020;
+    border-radius: 5px;
+    width: 20%;
+    padding: 5px;
+}
+/* Text style end */
+
+/* Table style */
 table {
     border: 1px solid black;
     border-collapse: collapse;
@@ -106,7 +147,9 @@ td {
     padding: 5px;
     border: 1px solid black;
 }
+/* Table style end */
 
+/* Images style */
 img.school-image {
     height: 40%;
     width: 40%;
@@ -123,40 +166,11 @@ img.interest-img {
     padding: 5px;
 }
 
-.description {
-    background-color: #00000020;
-    border-radius: 5px;
-    width: 20%;
-    padding: 5px;
-}
-
-.interest-row {
-    display: flex;
-    padding: 10px;
-    width: 100%;
-    height: inherit;
-    justify-content: space-evenly;
-}
-
-.job-row {
-    display: flex;
-    padding: 10px;
-    width: 95%;
-    padding-right: 4%;
-    height: inherit;
-    justify-content: space-evenly;
-    background-color: #00000020;
-    border-radius: 2%;
-}
-
-.job-img {
+img.job-img {
     border-radius: 5px;
     height: auto;
     max-height: inherit;
     width: 30%;
     padding: 5px;
 }
-
-div.interest-title{
-    font-weight: bold;
-}
+/* Images style end */
