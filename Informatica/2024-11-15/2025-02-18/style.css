@@ -1,0 +1,176 @@
+/* Main style */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+footer {
+    flex-shrink: 0;
+    width: 100%;
+    padding: 10px 0;
+    margin: 0;
+    text-align: center;
+    background-color: #141414;
+    color: whitesmoke;
+    font-size: 14px;
+}
+
+body {
+    background-color: #363636;
+}
+/* Main style end */
+
+/* Navbar style */
+nav {
+    flex-shrink: 0;
+    display: flex;
+    height: 50px;
+    width: 100%;
+    justify-content: left;
+    align-items: center;
+    border-bottom: 1px solid black;
+}
+
+.nav-element {
+    height: 80%;
+    width: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: medium;
+    color: white;
+    background-color: transparent;
+    border-radius: 10px;
+    border: 0;
+}
+
+.nav-element:hover {
+    color:blueviolet;
+}
+/* Navbar style end */
+
+/* Row style */
+.row {
+    display: flex;
+    padding: 10px;
+    width: 100%;
+    height: inherit;
+    justify-content: center;
+}
+
+.interest-row {
+    display: flex;
+    padding: 10px;
+    width: 100%;
+    height: inherit;
+    justify-content: space-evenly;
+}
+
+.job-row {
+    display: flex;
+    padding: 10px;
+    width: 95%;
+    padding-right: 4%;
+    height: inherit;
+    justify-content: space-evenly;
+    background-color: #00000020;
+    border-radius: 2%;
+}
+/* Row style end */
+
+/* Containers style */
+.container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+}
+
+.main-article {
+    width: 80%;
+    border-radius: 20px;
+    margin: 15px;
+    padding: 20px;
+    background-color: antiquewhite;
+    box-shadow: 5px 5px 8px black;
+}
+/* Containers style end */
+
+/* Text style */
+span.title {
+    display: block;
+    width: 100%;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #323232;
+    font-size: x-large;
+    font-weight: bold;
+    font-family: "Times New Roman";
+}
+
+div.interest-title{
+    font-weight: bold;
+}
+
+.description {
+    background-color: #00000020;
+    border-radius: 5px;
+    width: 20%;
+    padding: 5px;
+}
+/* Text style end */
+
+/* Table style */
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+caption {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+th.ora {
+    border-right: 1px solid black;
+    padding: 5px;
+}
+
+th.giorno {
+    border-bottom: 1px solid black;
+    padding: 5px;
+}
+
+td {
+    text-align: center;
+    padding: 5px;
+    border: 1px solid black;
+}
+/* Table style end */
+
+/* Images style */
+img.school-image {
+    height: 40%;
+    width: 40%;
+    margin-right: 5%;
+    border-radius: 15px;
+}
+
+img.interest-img {
+    background-color: #00000020;
+    border-radius: 5px;
+    height: auto;
+    max-height: inherit;
+    width: 20%;
+    padding: 5px;
+}
+
+img.job-img {
+    border-radius: 5px;
+    height: auto;
+    max-height: inherit;
+    width: 30%;
+    padding: 5px;
+}
+/* Images style end */
