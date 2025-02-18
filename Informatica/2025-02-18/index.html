@@ -33,6 +33,12 @@
                 <br><br>
                 Se vuoi conoscere meglio i miei progetti e le mie passioni, esplora le sezioni del sito!
             </div>
+            <br>
+            <div class="container">
+                <p id="federico">
+                    ...
+                </p>
+            </div>
             <!-- Text end -->
         </div>
     </div>
@@ -43,6 +49,40 @@
         Marco Balducci 4H &copy; 2025
     </footer>
     <!-- Footer end -->
+
+    <!-- Piccolo script -->
+    <script>
+        //variabili
+        let federico;
+        let direction = true;
+        
+        function x(){
+            setTimeout(() => {
+                //cambia direzione in base ai limiti scelti
+                if(federico.innerText.length > 6) {
+                    direction = false;
+                } else if(federico.innerText.length < 1){
+                    direction = true;
+                }
+
+                //aggiungi o rimuovi caratteri dalla stringa
+                if(direction){
+                    federico.innerText += '.'
+                } else {
+                    federico.innerText = federico.innerText.substring(0, federico.innerText.length-1);
+                }
+
+                //richiama funzione
+                x()
+            }, 500)
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            federico = document.getElementById('federico');
+            x();
+        })
+    </script>
+    <!-- Piccolo script end -->
 </body>
 
 </html>
