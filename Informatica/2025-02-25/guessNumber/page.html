@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dadi</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #343a40;
+      color: #ffffff;
+    }
+    .card {
+      background-color: #454d55;
+      border: none;
+    }
+    .btn-primary {
+      background-color: #6c757d;
+      border: none;
+    }
+    .btn-primary:hover {
+      background-color: #5a6268;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Gioco dei dadi</a>
+  </nav>
+  <div class="container mt-5">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Benvenuto al gioco dei dadi</h5>
+        <p class="card-text">Scommetti un po' di soldi e vinci!</p>
+        <div class="row ml-1 mr-1">
+            <div class="col-10 input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">€</span>
+                  <span class="input-group-text" id="saldo">0.00</span>
+                </div>
+                <input type="text" class="form-control" id="scommessa" aria-label="Amount (to the nearest dollar)">
+              </div>
+              <div class=" col-2 btn btn-primary">
+                Scommetti
+              </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
