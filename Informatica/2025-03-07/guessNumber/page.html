@@ -1,0 +1,93 @@
+<!-- Marco Balducci 4H 28/02/2025 -->
+<!DOCTYPE html>
+<html lang="it">
+<!-- head start -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dadi</title>
+  <!-- Bootstrap and custom css -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #343a40;
+      color: #ffffff;
+    }
+
+    .card {
+      background-color: #454d55;
+      border: none;
+    }
+
+    .btn-primary {
+      background-color: #6c757d;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #5a6268;
+    }
+  </style>
+</head>
+<!-- head end -->
+
+<!-- body start -->
+<body>
+  <!-- navbar start -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Gioco dei dadi</a>
+  </nav>
+  <!-- navbar end -->
+
+  <!-- container start -->
+  <div class="container mt-5">
+    <div class="card">
+      <div class="row ml-1">
+
+        <!-- card body start -->
+        <div class="card-body">
+          <!-- title start -->
+          <h5 class="card-title">Benvenuto al gioco dei dadi</h5>
+          <p class="card-text">Scommetti un po' di soldi e vinci!</p>
+          <!-- title end -->
+          <div class="row">
+            <!-- input start -->
+            <div class="col-6 input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">€</span>
+                <span class="input-group-text" id="saldo">100</span>
+              </div>
+              <input type="text" class="form-control" id="puntata" aria-label="Amount (to the nearest dollar)">
+              <input type="number" class="form-control" id="scommessa" placeholder="Numero" min="2" max="12">
+            </div>
+            <!-- input end -->
+
+          </div>
+          <button class="btn btn-primary" id="button">Scommetti</button>
+        </div>
+        <!-- card body end -->
+
+        <!-- dice display start -->
+        <div class="card-body text-center">
+          <h1 class="card-title"> &#9856;&#9857;&#9858;&#9859;&#9860;&#9861;</h1>
+          <h1 class="card-title" id="dadi"> &#9856;&#9857;&#9858;&#9859;&#9860;&#9861;</h1>
+          <h1 class="card-title"> &#9856;&#9857;&#9858;&#9859;&#9860;&#9861;</h1>
+        </div>
+        <!-- dice display end -->
+
+      </div>
+    </div>
+  </div>
+  <!-- container end -->
+
+  <!-- scripts start -->
+  <script src="./script.js"></script>
+  <!-- Bootstrap js -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- scripts end -->
+</body>
+<!-- body end -->
+
+</html>
