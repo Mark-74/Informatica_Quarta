@@ -1,0 +1,24 @@
+Nome e cognome:
+	caratteri validi (solo lettere)
+	lunghezza minima e massima
+
+Data di nascita:
+	verificare formato
+	data esistente
+	intervallo plausibile
+
+Username:
+	lunghezza
+	caratteri consentiti
+	unicità nome utente (per ora no)
+
+Password:
+	Lunghezza minima
+	combinazione di caratteri con:
+		lettere minuscole e maiuscole
+		almeno un numero
+		almeno un simbolo
+
+Email:
+	valida
+	validazione dominio (facoltativo)
