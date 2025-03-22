@@ -195,10 +195,7 @@ namespace Minesweeper_server
     struct ClientGameData
     {
         public ClientPosition Move { get; set; }
-        public string toString()
-        {
-            return $"{Move.X} {Move.Y}";
-        }
+
     }
 
     public struct ClientPosition
@@ -225,7 +222,14 @@ namespace Minesweeper_server
     {
         public bool HasWon { get; set; }
         public bool HasLost { get; set; }
-        public List<ServerPosition> OpenedCells { get; set; } // Use a List<Position>
+        public List<ServerPosition> OpenedCells { get; set; }
+
+        public ServerGameData(bool hasWon, bool hasLost, List<ServerPosition> openedCells)
+        {
+            HasWon = hasWon;
+            HasLost = hasLost;
+            OpenedCells = openedCells;
+        }
     }
 
 
@@ -250,24 +254,25 @@ namespace Minesweeper_server
 
                 // ottieni i dati dal client
                 ClientGameData data = JsonSerializer.Deserialize<ClientGameData>(json_data);
+                Console.WriteLine($"Received move: {data.Move.X}, {data.Move.Y}");
 
                 // gestisci mossa
                 (bool hasLost, bool hasWon) = instance.Open(data.Move.X, data.Move.Y);
-                List<ServerPosition> opened = instance.OpenedCells;
 
                 // manda risultato al client
-                string json_response = JsonSerializer.Serialize(new ServerGameData
-                {
-                    HasWon = hasWon,
-                    HasLost = hasLost,
-                    OpenedCells = opened
-                }); 
+                string json_response = JsonSerializer.Serialize(new ServerGameData(hasWon, hasLost, instance.OpenedCells)); 
+                Console.WriteLine(json_response);
                 byte[] response = Encoding.ASCII.GetBytes(json_response);
 
                 handler.Send(response);
                 if (hasWon | hasLost)
                     break;
             }
+
+            handler.Shutdown(SocketShutdown.Both);
+            handler.Close();
+
+            Console.WriteLine("Game ended, connection closed.");
         }
 
         public static void StartServer()
@@ -288,11 +293,10 @@ namespace Minesweeper_server
                 while (true)
                 {
                     Socket handler = listener.Accept();
+                    Console.WriteLine("Client connected.");
                     Thread gameInstance = new Thread(game);
                     gameInstance.Start(handler);
                 }
-
-
             }
             catch (Exception ex)
             {
