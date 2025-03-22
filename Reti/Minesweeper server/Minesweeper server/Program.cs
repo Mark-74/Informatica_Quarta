@@ -225,7 +225,7 @@ namespace Minesweeper_server
     {
         public bool HasWon { get; set; }
         public bool HasLost { get; set; }
-        public List<ClientPosition> OpenedCells { get; set; } // Use a List<Position>
+        public List<ServerPosition> OpenedCells { get; set; } // Use a List<Position>
     }
 
 
@@ -233,30 +233,7 @@ namespace Minesweeper_server
     {
         static void Main(string[] args)
         {
-            /* Example client data
-                string json = "{\"Move\": {\"X\": 5, \"Y\": 10}}";
-                ClientGameData data = JsonSerializer.Deserialize<ClientGameData>(json);
-                Console.WriteLine(data.toString());
-            */
-            /* Example Server data
-            string json = @"
-            {
-              ""HasWon"": true,
-              ""HasLost"": false,
-              ""OpenedCells"": [
-                { ""X"": 1, ""Y"": 2 },
-                { ""X"": 3, ""Y"": 4 }
-              ]
-            }";
-
-            // Deserialize
-            ServerGameData data = JsonSerializer.Deserialize<ServerGameData>(json);
-
-            // Access properties
-            Console.WriteLine($"HasWon: {data.HasWon}"); // true
-            Console.WriteLine($"OpenedCells count: {data.OpenedCells.Count}"); // 2
-            Console.WriteLine($"First cell: ({data.OpenedCells[0].X}, {data.OpenedCells[0].Y})"); // (1, 2)
-            */
+            StartServer();
         }
 
         public static void game(object handler_obj)
@@ -265,14 +242,11 @@ namespace Minesweeper_server
 
             Game instance = new Game(Game.Difficulty.Normal);
 
-            string json_data = string.Empty;
-            byte[] buffer = null;
-
             while (true)
             {
-                buffer = new byte[4096];
+                byte[] buffer = new byte[4096];
                 int bytesReceived = handler.Receive(buffer);
-                json_data += Encoding.ASCII.GetString(buffer, 0, bytesReceived);
+                string json_data = Encoding.ASCII.GetString(buffer, 0, bytesReceived);
 
                 // ottieni i dati dal client
                 ClientGameData data = JsonSerializer.Deserialize<ClientGameData>(json_data);
@@ -282,8 +256,17 @@ namespace Minesweeper_server
                 List<ServerPosition> opened = instance.OpenedCells;
 
                 // manda risultato al client
+                string json_response = JsonSerializer.Serialize(new ServerGameData
+                {
+                    HasWon = hasWon,
+                    HasLost = hasLost,
+                    OpenedCells = opened
+                }); 
+                byte[] response = Encoding.ASCII.GetBytes(json_response);
 
-
+                handler.Send(response);
+                if (hasWon | hasLost)
+                    break;
             }
         }
 
