@@ -1,9 +1,14 @@
-﻿using System.Net.Http.Headers;
+﻿using System.Net;
+using System.Net.Http.Headers;
+using System.Net.Sockets;
+using System.Text;
+using System.Text.Json;
 
 namespace Minesweeper_server
 {
     public class Game
     {
+        const int DIMENSIONS = 10;
         public enum Difficulty
         {
             Easy,
@@ -13,16 +18,16 @@ namespace Minesweeper_server
 
         private byte[,] Matrix;
         private bool[,] IsOpened;
-        private List<string> OpenedCells = new List<string>();
+        public List<ServerPosition> OpenedCells = new List<ServerPosition>();
         private Random rnd = new Random();
         private List<int> BombCoordinates;
         public Difficulty difficulty { get; private set; }
         public int BombsNumber { get; private set; }
 
-        public Game(int dimensions, Difficulty difficulty)
+        public Game(Difficulty difficulty)
         {
-            Matrix = new byte[dimensions, dimensions];
-            IsOpened = new bool[dimensions, dimensions];
+            Matrix = new byte[DIMENSIONS, DIMENSIONS];
+            IsOpened = new bool[DIMENSIONS, DIMENSIONS];
             this.difficulty = difficulty;
 
             Setup();
@@ -132,7 +137,7 @@ namespace Minesweeper_server
             int adjacentBombs = CountAdjacentBombs(x, y);
             Matrix[x, y] = (byte)adjacentBombs;
             IsOpened[x, y] = true;
-            OpenedCells.Add($"({x},{y}):{adjacentBombs}");
+            OpenedCells.Add(new ServerPosition(x, y, adjacentBombs));
 
             // If there are no bombs adjacent, recursively reveal neighbors.
             if (adjacentBombs == 0)
@@ -169,7 +174,7 @@ namespace Minesweeper_server
             return true;
         }
 
-        public bool Open(int x, int y)
+        public (bool HasLost, bool HasWon) Open(int x, int y)
         {
             if (x < 0 || x >= Matrix.GetLength(0))
                 throw new ArgumentException("Invalid X");
@@ -177,20 +182,140 @@ namespace Minesweeper_server
                 throw new ArgumentException("Invalid Y");
 
             OpenedCells.Clear();
-            bool result = Reveal(x, y);
+            bool lost = !Reveal(x, y);
+            bool hasWon = false;
 
-            if(result) CheckWin(); // If the user can still play, checks if he won
+            if(!lost) 
+                hasWon = CheckWin(); // If the user can still play, checks if he won
 
-            return result;
+            return (lost, hasWon);
         }
     }
 
+    struct ClientGameData
+    {
+        public ClientPosition Move { get; set; }
+        public string toString()
+        {
+            return $"{Move.X} {Move.Y}";
+        }
+    }
 
-    internal class Program
+    public struct ClientPosition
+    {
+        public int X { get; set; }
+        public int Y { get; set; }
+    }
+
+    public struct ServerPosition
+    {
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Adjacent { get; set; }
+
+        public ServerPosition(int x, int y, int adjacent)
+        {
+            X = x;
+            Y = y;
+            Adjacent = adjacent;
+        }
+    }
+
+    public struct ServerGameData
+    {
+        public bool HasWon { get; set; }
+        public bool HasLost { get; set; }
+        public List<ClientPosition> OpenedCells { get; set; } // Use a List<Position>
+    }
+
+
+    class Program
     {
         static void Main(string[] args)
         {
+            /* Example client data
+                string json = "{\"Move\": {\"X\": 5, \"Y\": 10}}";
+                ClientGameData data = JsonSerializer.Deserialize<ClientGameData>(json);
+                Console.WriteLine(data.toString());
+            */
+            /* Example Server data
+            string json = @"
+            {
+              ""HasWon"": true,
+              ""HasLost"": false,
+              ""OpenedCells"": [
+                { ""X"": 1, ""Y"": 2 },
+                { ""X"": 3, ""Y"": 4 }
+              ]
+            }";
 
+            // Deserialize
+            ServerGameData data = JsonSerializer.Deserialize<ServerGameData>(json);
+
+            // Access properties
+            Console.WriteLine($"HasWon: {data.HasWon}"); // true
+            Console.WriteLine($"OpenedCells count: {data.OpenedCells.Count}"); // 2
+            Console.WriteLine($"First cell: ({data.OpenedCells[0].X}, {data.OpenedCells[0].Y})"); // (1, 2)
+            */
+        }
+
+        public static void game(object handler_obj)
+        {
+            Socket handler = (Socket)handler_obj;
+
+            Game instance = new Game(Game.Difficulty.Normal);
+
+            string json_data = string.Empty;
+            byte[] buffer = null;
+
+            while (true)
+            {
+                buffer = new byte[4096];
+                int bytesReceived = handler.Receive(buffer);
+                json_data += Encoding.ASCII.GetString(buffer, 0, bytesReceived);
+
+                // ottieni i dati dal client
+                ClientGameData data = JsonSerializer.Deserialize<ClientGameData>(json_data);
+
+                // gestisci mossa
+                (bool hasLost, bool hasWon) = instance.Open(data.Move.X, data.Move.Y);
+                List<ServerPosition> opened = instance.OpenedCells;
+
+                // manda risultato al client
+
+
+            }
+        }
+
+        public static void StartServer()
+        {
+            IPHostEntry host = Dns.GetHostEntry("localhost");
+            IPAddress ip = host.AddressList[0];
+            IPEndPoint localEndPoint = new IPEndPoint(ip, 11000);
+
+            try
+            {
+                Socket listener = new Socket(ip.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                listener.Bind(localEndPoint);
+
+                listener.Listen(10);
+
+                Console.WriteLine("Server is up and listening, use CTRL+C to stop.");
+
+                while (true)
+                {
+                    Socket handler = listener.Accept();
+                    Thread gameInstance = new Thread(game);
+                    gameInstance.Start(handler);
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return;
+            }
         }
     }
 }
