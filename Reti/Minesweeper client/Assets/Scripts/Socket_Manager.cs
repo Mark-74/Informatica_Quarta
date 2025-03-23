@@ -4,6 +4,8 @@ using System.Net.Sockets;
 using System.Text;
 using Unity.VisualScripting.Antlr3.Runtime.Collections;
 using System.Collections.Generic;
+using Unity.XR.OpenVR;
+using System.Linq;
 
 public class Socket_Manager : MonoBehaviour
 {
@@ -28,7 +30,7 @@ public class Socket_Manager : MonoBehaviour
             sender = null;
         }
     }
-    struct ClientGameData
+    public struct ClientGameData
     {
         public Event_Manager.Position Move { get; set; }
         public ClientGameData(Event_Manager.Position p)
@@ -48,6 +50,11 @@ public class Socket_Manager : MonoBehaviour
             Y = y;
             Adjacent = adjacent;
         }
+
+        public override string ToString()
+        {
+            return $"X: {X}, Y: {Y}, Adjacent: {Adjacent}";
+        }
     }
     public struct ServerGameData
     {
@@ -61,6 +68,11 @@ public class Socket_Manager : MonoBehaviour
             HasLost = hasLost;
             OpenedCells = openedCells;
         }
+
+        public override string ToString()
+        {
+            return $"HasWon: {HasWon}, HasLost: {HasLost}, OpenedCells: {OpenedCells}";
+        }
     }
 
     private static string CreateJson(ClientGameData data)
@@ -69,7 +81,25 @@ public class Socket_Manager : MonoBehaviour
     }
     private static ServerGameData DecodeJson(string json)
     {
-        return JsonUtility.FromJson<ServerGameData>(json); // Unity's built-in JSON decoder is broken bruh
+        ServerGameData result = new ServerGameData();
+        result.HasWon = json.Contains("HasWon\":true");
+        result.HasLost = json.Contains("HasLost\":true");
+        result.OpenedCells = new List<ServerPosition>();
+        int idx_l =  json.IndexOf("["); int idx_r = json.IndexOf("]");
+        json = json.Substring(idx_l+1, idx_r - idx_l-1);
+        while (json.Length > 0)
+        {
+            
+            int idx_l2 = json.IndexOf("{"); int idx_r2 = json.IndexOf("}");
+            //Debug.Log(json + " " + json.Substring(idx_l2, idx_r2 - idx_l2 + 1));
+            string current = json.Substring(idx_l2, idx_r2 - idx_l2 + 1);
+            result.OpenedCells.Add(new ServerPosition(int.Parse("" + current[current.IndexOf('X') + 3]), int.Parse("" + current[current.IndexOf('Y') + 3]), int.Parse("" + current[current.Length-2])));
+            Debug.Log(json.Substring(idx_l2, idx_r2 - idx_l2 + 1) + " " + result.OpenedCells.Last().ToString());
+
+            json = json.Substring(idx_r2 + 1);
+        }
+
+        return result;
     }
 
     public static void MakeMove(Event_Manager.Position p)
@@ -80,8 +110,8 @@ public class Socket_Manager : MonoBehaviour
         string json_response = ReceiveData();
         Debug.Log(json_response);
         ServerGameData response = DecodeJson(json_response);
-        Debug.Log(response.OpenedCells.Count);
-        Event_Manager.OnServerResponse(response.HasWon, response.HasLost, response.OpenedCells);
+        Debug.Log("chiamo l'event manager");
+        Event_Manager.OnServerResponse(p, response);
     }
 
     private static void SendData(string data)
