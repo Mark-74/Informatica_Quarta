@@ -91,10 +91,8 @@ public class Socket_Manager : MonoBehaviour
         {
             
             int idx_l2 = json.IndexOf("{"); int idx_r2 = json.IndexOf("}");
-            //Debug.Log(json + " " + json.Substring(idx_l2, idx_r2 - idx_l2 + 1));
             string current = json.Substring(idx_l2, idx_r2 - idx_l2 + 1);
             result.OpenedCells.Add(new ServerPosition(int.Parse("" + current[current.IndexOf('X') + 3]), int.Parse("" + current[current.IndexOf('Y') + 3]), int.Parse("" + current[current.Length-2])));
-            Debug.Log(json.Substring(idx_l2, idx_r2 - idx_l2 + 1) + " " + result.OpenedCells.Last().ToString());
 
             json = json.Substring(idx_r2 + 1);
         }
@@ -105,12 +103,9 @@ public class Socket_Manager : MonoBehaviour
     public static void MakeMove(Event_Manager.Position p)
     {
         string json_data = CreateJson(new ClientGameData(p));
-        Debug.Log(json_data);
         SendData(json_data);
         string json_response = ReceiveData();
-        Debug.Log(json_response);
         ServerGameData response = DecodeJson(json_response);
-        Debug.Log("chiamo l'event manager");
         Event_Manager.OnServerResponse(p, response);
     }
 
