@@ -9,6 +9,8 @@ public class grid_block_click : MonoBehaviour
     {
         if(isOpen) return;
 
+        if(!Event_Manager.Status) return; // if the game is over, don't allow any more moves
+
         if (Input.GetMouseButtonDown(0) && !hasFlag)
         {
             // get the coordinates from the name of the object

@@ -11,6 +11,11 @@ public class Socket_Manager : MonoBehaviour
 {
     private static Socket sender;
 
+    private void Awake()
+    {
+        sender = null;
+    }
+
     void Start()
     {
         IPHostEntry host = Dns.GetHostEntry("localhost");
@@ -27,9 +32,16 @@ public class Socket_Manager : MonoBehaviour
         catch
         {
             Debug.Log("Unable to connect to remote server");
-            sender = null;
+            Application.Quit();
         }
     }
+
+    public static void CloseConnection()
+    {
+        sender.Shutdown(SocketShutdown.Both);
+        sender.Close();
+    }
+
     public struct ClientGameData
     {
         public Event_Manager.Position Move { get; set; }
