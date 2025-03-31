@@ -1,0 +1,1 @@
+in questa cartella ci sono tutte le fasi del progetto, la finale è FiltriAsyncWpf 2.

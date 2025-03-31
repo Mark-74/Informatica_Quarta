@@ -1,0 +1,214 @@
+﻿<Window x:Class="FiltriWPF3.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FiltriWPF3"
+        mc:Ignorable="d"
+        Title="Image Filter Tool" Height="450" Width="800">
+    <Grid Margin="2,0,-2,-31">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="46*"/>
+            <ColumnDefinition Width="221*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Load Image Button -->
+        <Button x:Name="btnLoadImage"
+                Content="Carica immagine"
+                HorizontalAlignment="Left"
+                Height="29"
+                Margin="21,64,0,0"
+                VerticalAlignment="Top"
+                Width="117"
+                Click="btnLoadImage_Click"
+                Grid.ColumnSpan="2"
+                FontFamily="Corbel"
+                Background="White"/>
+
+        <!-- Image Display Area -->
+        <Border BorderBrush="Black"
+                BorderThickness="1"
+                HorizontalAlignment="Left"
+                Height="280"
+                Margin="28,37,0,0"
+                VerticalAlignment="Top"
+                Width="603"
+                Grid.Column="1">
+            <Image x:Name="imgDisplay" Margin="4"/>
+        </Border>
+
+        <!-- Apply Filter Button -->
+        <Button x:Name="btnApplyFilter"
+                Content="applica filtro"
+                HorizontalAlignment="Left"
+                Height="28"
+                Margin="21,260,0,0"
+                VerticalAlignment="Top"
+                Width="117"
+                FontFamily="Corbel"
+                Grid.ColumnSpan="2"
+                Background="White"
+                Click="btnApplyFilter_Click"/>
+
+        <!-- Input Grid -->
+        <TextBox x:Name="txt00"
+                 HorizontalAlignment="Left"
+                 Height="35"
+                 Margin="21,120,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="33"
+                 Text="1"
+                 FontFamily="Cascadia Code"
+                 FontSize="22"
+                 TextAlignment="Center"
+                 Background="{x:Null}"
+                 BorderBrush="Black"/>
+
+        <TextBox x:Name="txt01"
+                 HorizontalAlignment="Left"
+                 Height="35"
+                 Margin="63,120,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="33"
+                 Text="1"
+                 FontFamily="Cascadia Code"
+                 FontSize="22"
+                 TextAlignment="Center"
+                 Background="{x:Null}"
+                 BorderBrush="#FF000106"/>
+
+        <TextBox x:Name="txt02"
+                 HorizontalAlignment="Left"
+                 Height="35"
+                 Margin="105,120,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="33"
+                 Text="1"
+                 Grid.ColumnSpan="2"
+                 FontFamily="Cascadia Code"
+                 FontSize="22"
+                 TextAlignment="Center"
+                 Background="{x:Null}"
+                 BorderBrush="Black"/>
+
+        <TextBox x:Name="txt10"
+                 HorizontalAlignment="Left"
+                 Height="35"
+                 Margin="21,160,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="33"
+                 Text="1"
+                 FontFamily="Cascadia Code"
+                 FontSize="22"
+                 TextAlignment="Center"
+                 BorderBrush="Black"
+                 Background="{x:Null}"/>
+
+        <TextBox x:Name="txt11"
+                 HorizontalAlignment="Left"
+                 Height="35"
+                 Margin="63,160,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="33"
+                 Text="1"
+                 FontFamily="Cascadia Code"
+                 FontSize="22"
+                 TextAlignment="Center"
+                 Background="{x:Null}"
+                 BorderBrush="Black"/>
+
+        <TextBox x:Name="txt12"
+                 HorizontalAlignment="Left"
+                 Height="35"
+                 Margin="105,160,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="33"
+                 Text="1"
+                 Grid.ColumnSpan="2"
+                 FontFamily="Cascadia Code"
+                 FontSize="22"
+                 TextAlignment="Center"
+                 Background="{x:Null}"
+                 BorderBrush="Black"/>
+
+        <TextBox x:Name="txt20"
+                 HorizontalAlignment="Left"
+                 Height="35"
+                 Margin="21,0,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Center"
+                 Width="33"
+                 Text="1"
+                 FontFamily="Cascadia Code"
+                 FontSize="22"
+                 TextAlignment="Center"
+                 Background="{x:Null}"
+                 BorderBrush="Black"/>
+
+        <TextBox x:Name="txt21"
+                 HorizontalAlignment="Left"
+                 Height="35"
+                 Margin="63,0,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Center"
+                 Width="33"
+                 Text="1"
+                 FontFamily="Cascadia Code"
+                 FontSize="22"
+                 TextAlignment="Center"
+                 BorderBrush="Black"
+                 Background="{x:Null}"/>
+
+        <TextBox x:Name="txt22"
+                 HorizontalAlignment="Left"
+                 Height="35"
+                 Margin="105,0,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Center"
+                 Width="33"
+                 Text="1"
+                 Grid.ColumnSpan="2"
+                 FontFamily="Cascadia Code"
+                 FontSize="22"
+                 TextAlignment="Center"
+                 Background="{x:Null}"
+                 BorderBrush="Black"/>
+
+        <!-- File Path Display -->
+        <Label x:Name="lblImageName"
+               HorizontalAlignment="Left"
+               Height="27"
+               Margin="28,10,0,0"
+               VerticalAlignment="Top"
+               Width="603"
+               Grid.Column="1"
+               Content=""/>
+
+        <Label Content="Marco Balducci 4H"
+               HorizontalAlignment="Left"
+               Margin="331,364,0,0"
+               VerticalAlignment="Top"
+               Width="258"
+               VerticalContentAlignment="Center"
+               HorizontalContentAlignment="Center"
+               FontWeight="Bold"
+               FontSize="17"
+               RenderTransformOrigin="1.187,-0.367"
+               Grid.Column="1"/>
+
+        <!-- Progress Bar -->
+        <ProgressBar x:Name="progressBar"
+                     HorizontalAlignment="Left"
+                     Height="33"
+                     Margin="84,364,0,0"
+                     VerticalAlignment="Top"
+                     Width="276"
+                     Grid.ColumnSpan="2"/>
+    </Grid>
+</Window>

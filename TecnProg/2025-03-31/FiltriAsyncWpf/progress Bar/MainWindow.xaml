@@ -1,0 +1,17 @@
+﻿<Window x:Class="progress_Bar.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:progress_Bar"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Button x:Name="btn_Start" Content="Start ProgressBar" HorizontalAlignment="Left" Margin="75,0,0,0" VerticalAlignment="Center" Height="45" Width="190" FontSize="18" FontWeight="Bold" Click="btn_Start_Click"/>
+        <TextBox x:Name="txtSync01" HorizontalAlignment="Left" Margin="400,118,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="225" Height="30"/>
+        <ProgressBar x:Name="prgBar01" HorizontalAlignment="Left" Height="30" Margin="400,64,0,0" VerticalAlignment="Top" Width="225"/>
+        <TextBox x:Name="txtSync02" HorizontalAlignment="Left" Margin="400,341,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="225" Height="30"/>
+        <ProgressBar x:Name="prgBar02" HorizontalAlignment="Left" Height="30" Margin="400,291,0,0" VerticalAlignment="Top" Width="225"/>
+
+    </Grid>
+</Window>
