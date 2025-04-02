@@ -2,12 +2,10 @@ using UnityEngine;
 
 public class grid_block_click : MonoBehaviour
 {
-    public bool isOpen = false;
     private bool hasFlag = false;
 
     void OnMouseOver()
     {
-        if(isOpen) return;
 
         if(!Event_Manager.Status) return; // if the game is over, don't allow any more moves
 
@@ -21,6 +19,9 @@ public class grid_block_click : MonoBehaviour
         } 
         else if (Input.GetMouseButtonDown(1))
         {
+            if (!(gameObject.GetComponent<SpriteRenderer>().sprite == spriteManager.instance.flagSprite || gameObject.GetComponent<SpriteRenderer>().sprite == spriteManager.instance.closedSprite))
+                return;
+
             if(!hasFlag) 
                 gameObject.GetComponent<SpriteRenderer>().sprite = spriteManager.instance.flagSprite;
             else 
