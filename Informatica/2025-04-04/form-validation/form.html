@@ -1,0 +1,79 @@
+<!-- Marco Balducci 4H 28/03/2025 -->
+<!-- Validazione form tramite jquery -->
+<!-- inizio head -->
+<head>
+    <!-- CSS Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<!-- fine head -->
+
+<!-- inizio body -->
+<body class="bg-dark text-white">
+    <!-- contenitore principale -->
+    <div class="container mt-5">
+        <!-- Titolo della pagina -->
+        <h1 class="text-center">Form validation - Marco Balducci 4H</h1>
+
+        <!-- inizio modulo -->
+        <form id="form">
+            <!-- campi username/password -->
+            <div class="row">
+                <div class="mb-3 col">
+                    <label for="username" class="form-label">Nome utente</label>
+                    <input type="text" class="form-control bg-dark text-white border-light" 
+                        id="username" name="username" placeholder="Inserisci il tuo username">
+                </div>
+                <div class="mb-3 col">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control bg-dark text-white border-light" 
+                        id="password" name="password" placeholder="Inserisci la tua password">
+                </div>
+            </div>
+            <!-- fine campi username/password -->
+
+            <!-- campo email -->
+            <div class="mb-3">
+                <label for="email" class="form-label">Indirizzo email</label>
+                <input type="email" class="form-control bg-dark text-white border-light" 
+                    id="email" name="email" placeholder="nome@esempio.com">
+            </div>
+            <!-- fine campo email -->
+
+            <!-- campi nome/cognome/data di nascita -->
+            <div class="row">
+                <div class="mb-3 col">
+                    <label for="name" class="form-label">Nome</label>
+                    <input type="text" class="form-control bg-dark text-white border-light" 
+                        id="name" name="name" placeholder="Inserisci il tuo nome reale">
+                </div>
+                <div class="mb-3 col">
+                    <label for="surname" class="form-label">Cognome</label>
+                    <input type="text" class="form-control bg-dark text-white border-light" 
+                        id="surname" name="surname" placeholder="Inserisci il tuo cognome reale">
+                </div>
+                <div class="mb-3 col">
+                    <label class="active form-label" for="datebirth">Data di nascita</label>
+                    <input class="form-control bg-dark text-white border-light" 
+                        type="date" id="datebirth" name="datebirth">
+                </div>
+            </div>
+            <!-- fine campi nome/cognome/data di nascita -->
+
+            <!-- Pulsante di invio -->
+            <button type="submit" class="btn btn-light">Invia</button>
+        </form>
+        <!-- fine modulo -->
+    </div>
+    <!-- fine contenitore principale -->
+
+    <!-- script necessari -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="./script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- fine script -->
+</body>
+<!-- fine body -->
