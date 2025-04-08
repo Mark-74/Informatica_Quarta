@@ -1,0 +1,5 @@
+SECRET_KEY: super_secret
+DB_HOST: database
+DB_USER: www
+DB_PASSWORD: wwwpassword
+DB_NAME: tris

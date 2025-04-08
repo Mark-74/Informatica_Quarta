@@ -248,25 +248,34 @@ namespace Minesweeper_server
 
             while (true)
             {
-                byte[] buffer = new byte[4096];
-                int bytesReceived = handler.Receive(buffer);
-                string json_data = Encoding.ASCII.GetString(buffer, 0, bytesReceived);
+                try
+                {
+                    byte[] buffer = new byte[4096];
+                    int bytesReceived = handler.Receive(buffer);
+                    string json_data = Encoding.ASCII.GetString(buffer, 0, bytesReceived);
 
-                // ottieni i dati dal client
-                ClientGameData data = JsonSerializer.Deserialize<ClientGameData>(json_data);
-                Console.WriteLine($"Received move: {data.Move.X}, {data.Move.Y}");
+                    // ottieni i dati dal client
+                    ClientGameData data = JsonSerializer.Deserialize<ClientGameData>(json_data);
+                    Console.WriteLine($"Received move: {data.Move.X}, {data.Move.Y}");
 
-                // gestisci mossa
-                (bool hasLost, bool hasWon) = instance.Open(data.Move.X, data.Move.Y);
+                    // gestisci mossa
+                    (bool hasLost, bool hasWon) = instance.Open(data.Move.X, data.Move.Y);
 
-                // manda risultato al client
-                string json_response = JsonSerializer.Serialize(new ServerGameData(hasWon, hasLost, instance.OpenedCells)); 
-                Console.WriteLine(json_response);
-                byte[] response = Encoding.ASCII.GetBytes(json_response);
+                    // manda risultato al client
+                    string json_response = JsonSerializer.Serialize(new ServerGameData(hasWon, hasLost, instance.OpenedCells));
+                    Console.WriteLine(json_response);
+                    byte[] response = Encoding.ASCII.GetBytes(json_response);
 
-                handler.Send(response);
-                if (hasWon | hasLost)
+                    handler.Send(response);
+                    if (hasWon | hasLost)
+                        break;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Client has disconnected.");
                     break;
+                }
+                
             }
 
             handler.Shutdown(SocketShutdown.Both);

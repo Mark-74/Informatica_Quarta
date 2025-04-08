@@ -1,0 +1,36 @@
+services:
+  tris-webserver:
+    build: ./
+    env_file: ./env/.web_env
+    container_name: tris
+    restart: unless_stopped
+    depends_on:
+      database:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    networks:
+      - main_network
+  
+  database:
+    image: mariadb:latest
+    env_file: ./env/.db_env
+    container_name: database
+    restart: unless-stopped
+    volumes:
+      - mariadb-data:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - main_network
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+      interval: 10s      
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+      
+volumes:
+  mariadb-data:
+
+networks:
+  main_network:

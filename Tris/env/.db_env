@@ -1,0 +1,4 @@
+MYSQL_ROOT_PASSWORD: rootpassword
+MYSQL_DATABASE: tris
+MYSQL_USER: www
+MYSQL_PASSWORD: wwwpassword
