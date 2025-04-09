@@ -3,3 +3,10 @@ CREATE TABLE IF NOT EXISTS users (
     username VARCHAR(128) NOT NULL UNIQUE,
     password VARCHAR(128) NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS scores (
+    user_id INT PRIMARY KEY,
+    score INT,
+    
+    FOREIGN KEY (user_id) REFERENCES users(id)
+)
