@@ -3,7 +3,7 @@ services:
     build: ./
     env_file: ./env/.web_env
     container_name: tris
-    restart: unless_stopped
+    restart: unless-stopped
     depends_on:
       database:
         condition: service_healthy
