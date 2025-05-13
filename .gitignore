@@ -5,3 +5,5 @@
 # Optionally, ignore Visual Studio temporary files and folders
 .vscode/
 .vs/
+
+**/educazione civica/
